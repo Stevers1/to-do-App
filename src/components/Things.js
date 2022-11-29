@@ -11,8 +11,9 @@ export default function Things(props) {
         checked={props.checked}
         onChange={props.onChange}
         id={props.id}
+        
       />
-    < p>{props.item.desc}</p>
+    <p>{props.item.desc}</p>
     </div>
   )
 }

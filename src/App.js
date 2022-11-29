@@ -51,7 +51,7 @@ export default function App() {
       };
     });
   }
-  //Help needed here
+  //onChange for the CHECKBOX
   function handleCheck(event) {
 
     const {id} = event.target
@@ -60,15 +60,18 @@ export default function App() {
       return el.id == id
     })
 
-    selected.done = !selected.done
-    
     console.log(selected,"selected")
     setThings(prevThings => {
-      return[
-        ...prevThings.filter(el => el.id != selected.id),selected
-      ]
+      const newThings = prevThings.map(obj => {
+        if(obj.id ==id){
+          return {...obj, done:!obj.done}
+        }else return{...obj}
+      })
+
+      return newThings;
       
     })
+
   }
 
   //For the Add plus button to add a new Thing to do
@@ -85,20 +88,21 @@ export default function App() {
       };
     });
   }
-  console.log(things.length);
-  /*   {id:things[things.length-1].id+1,
-  done: false,
-  desc: "",} */
 
-  React.useEffect(() => {
-    console.log(things);
-  }, [things]);
+  function activeClick() {
+    setThings(prevThings => {
+      return prevThings.filter(el => {
+        return el.done === false
+      })
+    })
+  }
+  console.log(Things)
 
   return (
     <main className="app_container">
       <Input onChange={handleChange} value={description.desc} />
       {thingsDisplay}
-      <InteractiveBar onClick={addOnClick} />
+      <InteractiveBar onClick1={addOnClick} onClickActive = {activeClick} />
     </main>
   );
 }
