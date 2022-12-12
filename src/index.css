@@ -15,15 +15,18 @@ body {
   display: flex;
   border-bottom: 2px solid rgb(196, 196, 196);
   max-width: 600px;
+  flex-wrap: wrap;
 }
 
 .interactive-container{
   display: flex;
   gap: 5px;
+  max-width: 455%;
+  flex-wrap: wrap;
 }
 
 .todo-input {
-  width: 100%;
+  max-width: 100%;
 }
 
 .app_container{
@@ -31,4 +34,10 @@ body {
   gap: 5px;
   flex-direction: column;
   margin-top: 80px;
+  max-width: 455px;
+  width: 100%;
+}
+
+.root{
+  max-width: 600px;
 }

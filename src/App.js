@@ -11,11 +11,13 @@ export default function App() {
       id: 0,
       done: false,
       desc: "Test",
+      active: "flex"
     },
     {
       id: 1,
       done: false,
       desc: "Test2",
+      active: "flex"
     }
   ]);
   //Code that will display the array of objects from {things}
@@ -29,6 +31,7 @@ export default function App() {
         name="done"
         checked={el.done}
         onChange={handleCheck}
+        display={el.active}
       />
     );
   });
@@ -73,9 +76,16 @@ export default function App() {
     })
 
   }
+  function onEnter(e) {
+    console.log(e.key)
+    if(e.key === "Enter"){
+      addOnClick();
+    }
+  }
 
   //For the Add plus button to add a new Thing to do
   function addOnClick() {
+
 
     let newId = things.length 
     setThings((prevThings) => [...prevThings, description]);
@@ -85,24 +95,72 @@ export default function App() {
         id: newId + 1,
         done: false,
         desc: "",
+        active: "wait"
       };
     });
   }
 
-  function activeClick() {
-    setThings(prevThings => {
-      return prevThings.filter(el => {
-        return el.done === false
+  function searchBar(e) {
+    const {value}=e.target;
+    setThings(prevThings =>{
+      const searchDisplay = prevThings.map(el =>{
+        if(el.desc.includes(value)){
+          return{...el,active:"flex"}
+        }else return{...el,active:"none"}
       })
+      return searchDisplay
+    })
+  }
+
+  // active button
+  function activeClick() {
+
+    setThings(prevThings => {
+      console.log('Does it run?');
+      
+      const setDisplay = prevThings.map(el => {
+        if(el.active=="none"){
+          el.active="flex"
+        }
+        if(el.done===true){
+          return {...el, active:"none"}
+        }else return{...el}
+      })
+      return setDisplay;
+    })
+  }
+
+  function completedButton() {
+    setThings(prevThings => {
+      const setDisplay=prevThings.map(element => {
+        if(element.active=="none"){
+          element.active="flex"
+        }
+        if(element.done === false){
+          return{...element, active:"none"}
+        }else return {...element}
+      })
+      return setDisplay;
+    })
+  }
+
+  function allButton() {
+    setThings(prevThings => {
+      const setDisplay = prevThings.map(el => {
+        if(el.active === "none"){
+          return{...el, active:"flex"}
+        }else return{...el}
+      })
+      return setDisplay
     })
   }
   console.log(Things)
 
   return (
     <main className="app_container">
-      <Input onChange={handleChange} value={description.desc} />
+      <Input onChange={handleChange} value={description.desc} handleEnter={onEnter}/>
       {thingsDisplay}
-      <InteractiveBar onClick1={addOnClick} onClickActive = {activeClick} />
+      <InteractiveBar searchBar={searchBar} onClickAll ={allButton} onClickCompleted={completedButton} onClick1={addOnClick} onClickActive = {activeClick} />
     </main>
   );
 }

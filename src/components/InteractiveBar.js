@@ -3,10 +3,10 @@ export default function InteractiveBar(props) {
     <div className="interactive-container">
       <button onClick={props.onClick1}>+</button>
       <img src="#" alt="Lupa"/>
-      <input placeholder="Test"/>
-      <button>All</button>
+      <input placeholder="Search..." onChange={props.searchBar}/>
+      <button onClick={props.onClickAll}>All</button>
       <button onClick={props.onClickActive}>Active</button>
-      <button>Completed</button>
+      <button onClick={props.onClickCompleted}>Completed</button>
     </div>
   )
 }
